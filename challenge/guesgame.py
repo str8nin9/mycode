@@ -3,6 +3,8 @@
 
 import random
 
+esc = ["q", "Q", "quit", "Quit", "exit", "Exit"]
+
 def main():
     num= random.randint(1,100)
 
@@ -19,6 +21,9 @@ def main():
                 print("Correct!")
                 break
         except ValueError:
-            print("please enter a number!~")
+            es = input("please enter a number!~ or press q to quit")
+
+            if es in esc:
+                break
            
 main()
