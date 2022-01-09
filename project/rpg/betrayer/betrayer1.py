@@ -5,6 +5,7 @@ import random
 import dice
 import requests
 
+
 '''APis used listed here'''
 dndurl = "https://www.dnd5eapi.co/api/"
 
@@ -17,7 +18,7 @@ armory= {}
 def beasts():
     #creates a beastiary
     monsters = ["goblin"]
-    beastiary = {}
+    #beastiary = {}
     #Beastiary = requests.get(f"{dndurl}/monsters").json()
     for monster in monsters:
         burl= f"{dndurl}/monsters/{monster}"
@@ -26,7 +27,7 @@ def beasts():
 def arms():
     #creates an armory
     weapons = ["club","dagger","longsword"]
-    armory= {}
+    #armory= {}
     for weapon in weapons:
     
         url= f"{dndurl}/equipment/{weapon}"
@@ -63,6 +64,8 @@ def showStatus():
 
 #an inventory, which is initially empty
 inventory = []
+armory = {}
+beastiary = {}
 get = ['get', 'take', 'Take', 'Get', 'pick up', 'Pick up', 'pickup', 'Pickup', 'obtain', 'Obtain'] 
 #a dictionary linking a room to other rooms
 ## A dictionary linking a room to other rooms
@@ -155,4 +158,5 @@ while True:
 
 fight = input('select from the following: attack, defend, Flee!')
 if fight == 'attack':
-    print('you deal' + dice.roll(armory['longsword']) + 'damage')
+    print(f'you deal {dice.roll(armory["longsword"])} damage')
+    
