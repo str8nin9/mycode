@@ -16,12 +16,19 @@ armory= {}
 
 def beasts():
     #creates a beastiary
-    monsters = requests.get(f"{dndurl}/monsters").json()
+    monsters = ["goblin"]
+    beastiary = {}
+    #Beastiary = requests.get(f"{dndurl}/monsters").json()
+    for monster in monsters:
+        burl= f"{dndurl}/monsters/{monster}"
+        beast= requests.get(burl).json()
+        beastiary.update({monster: beast["hit_points"]})
 def arms():
     #creates an armory
     weapons = ["club","dagger","longsword"]
     armory= {}
     for weapon in weapons:
+    
         url= f"{dndurl}/equipment/{weapon}"
         x= requests.get(url).json()
         armory.update({weapon: x["damage"]["damage_dice"]})
@@ -56,7 +63,7 @@ def showStatus():
 
 #an inventory, which is initially empty
 inventory = []
-
+get = ['get', 'take', 'Take', 'Get', 'pick up', 'Pick up', 'pickup', 'Pickup', 'obtain', 'Obtain'] 
 #a dictionary linking a room to other rooms
 ## A dictionary linking a room to other rooms
 rooms = {
@@ -69,12 +76,12 @@ rooms = {
 
             'Kitchen' : {
                   'north' : 'Hall',
-                  'item'  : 'monster',
+                  'item'  : ['goblin'],
                 },
             'Dining Room' : {
                   'west' : 'Hall',
                   'south': 'Garden',
-                  'item' : 'potion',
+                  'item' : ['potion'],
                   'north' : 'Pantry',
                },
             'Garden' : {
@@ -82,7 +89,7 @@ rooms = {
                },
             'Pantry' : {
                   'south' : 'Dining Room',
-                  'item' : 'cookie',
+                  'item' : ['cookie'],
             }
          }
 
@@ -94,52 +101,58 @@ beasts()
 arms()
 #loop forever
 while True:
-
-  showStatus()
+    print(armory)
+    showStatus()
 
   #get the player's next 'move'
   #.split() breaks it up into an list array
   #eg typing 'go east' would give the list:
   #['go','east']
-  move = ''
-  while move == '':
-    move = input('>')
+    move = ''
+    while move == '':
+        move = input('>')
 
   # split allows an items to have a space on them
   # get golden key is returned ["get", "golden key"]          
-  move = move.lower().split(" ", 1)
+    move = move.lower().split(" ", 1)
 
   #if they type 'go' first
-  if move[0] == 'go':
+    if move[0] == 'go':
     #check that they are allowed wherever they want to go
-    if move[1] in rooms[currentRoom]:
+        if move[1] in rooms[currentRoom]:
       #set the current room to the new room
-      currentRoom = rooms[currentRoom][move[1]]
+            currentRoom = rooms[currentRoom][move[1]]
     #there is no door (link) to the new room
-    else:
-        print('You can\'t go that way!')
+        else:
+            print('You can\'t go that way!')
 
   #if they type 'get' first
-  if move[0] == 'get' :
-    #if the room contains an item, and the item is the one they want to get
-    if "item" in rooms[currentRoom] and move[1] in rooms[currentRoom]['item']:
-      #add the item to their inventory
-      inventory += [move[1]]
-      #display a helpful message
-      print(move[1] + ' got!')
-      #delete the item from the room
-      del rooms[currentRoom]['item']
-    #otherwise, if the item isn't there to get
-    else:
-      #tell them they can't get it
-      print('Can\'t get ' + move[1] + '!')
-      
-  ## Define how a player can win
-  if currentRoom == 'Garden' and 'key' in inventory and 'potion' in inventory:
-    print('You escaped the house with the ultra rare key and magic potion... YOU WIN!')
-    break
+    if move[0] in get:
+        #if the room contains an item, and the item is the one they want to get
+        if "item" in rooms[currentRoom] and move[1] in rooms[currentRoom]['item']:
+          #add the item to their inventory
+          inventory += [move[1]]
+          #display a helpful message
+          print(move[1] + ' got!')
+          #delete ONLY the taken item from the room
+          rooms[currentRoom]['item'].remove(move[1])
+        #otherwise, if the item isn't there to get
+        else:
+          #tell them they can't get it
+          print('Can\'t get ' + move[1] + '!')
+          
+      ## Define how a player can win
+    if currentRoom == 'Garden' and 'key' in inventory and 'potion' in inventory:
+        print('You escaped the house with the ultra rare key and magic potion... YOU WIN!')
+        quit()
+    if 'goblin' in rooms[currentRoom]['item'] and 'longsword' in inventory:
+        print('A goblin is alarmed by your entrance! \n prepare for combat!!!')
+        break
+      ## If a player enters a room with a monster
+    elif 'item' in rooms[currentRoom] and 'goblin' in rooms[currentRoom]['item']:
+        print('A goblin has got you... GAME OVER!\n honestly, that is a pathetic way to die')
+        quit()
 
-  ## If a player enters a room with a monster
-  elif 'item' in rooms[currentRoom] and 'monster' in rooms[currentRoom]['item']:
-    print('A monster has got you... GAME OVER!')
-    break
+fight = input('select from the following: attack, defend, Flee!')
+if fight == 'attack':
+    print('you deal' + dice.roll(armory['longsword']) + 'damage')
