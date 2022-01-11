@@ -16,9 +16,11 @@ for weapon in weapons:
     url= f"{dndurl}/equipment/{weapon}"
     x= requests.get(url).json()
     armory.update({weapon: x["damage"]["damage_dice"]})
-    print(armory)
+    #print(armory)
 
 
-#if __name__ == "__main__":
+if __name__ == "__main__":
     #for name in items['results']:
+    print(armory)
+    
         
