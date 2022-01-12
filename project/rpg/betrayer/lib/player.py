@@ -18,5 +18,6 @@ class player:
 #myplayer = player()
 
 if __name__ == "__main__":
-    player() = hero
+    hero = player()
+    
     #print(player.hp)
