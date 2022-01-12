@@ -10,10 +10,11 @@ import sys
 import os
 import time
 #import all py files from lib directory
-sys.path.insert(0, "/home/student/mycode/project/rpg/betrayer/lib/")
+sys.path.insert(0, "/home/student/mycode/project/rpg/betrayer/lib")
+import lib
 import API
-import player
-import combat
+#import player
+#import combat
 '''lists and dictionaries'''
 def showInstructions():
     #print a main menu and the commands
@@ -39,6 +40,7 @@ def showStatus():
     #print(*f'You see a {rooms[currentRoom]["item"]}')
   print("---------------------------")
 API.arms()
+
 API.beasts()
 #an inventory, which is initially empty
 inventory = []
@@ -110,20 +112,20 @@ while True:
             print('You can\'t go that way!')
 
   #if they type 'get' first
-        if move[0] in get:
+    if move[0] in get:
         #if the room contains an item, and the item is the one they want to get
-            if "item" in rooms[currentRoom] and move[1] in rooms[currentRoom]['item']:
-              #add the item to their inventory
-              inventory += [move[1]]
-              #display a helpful message
-              print(move[1] + ' got!')
-              #delete ONLY the taken item from the room
-              rooms[currentRoom]['item'].remove(move[1])
-            #otherwise, if the item isn't there to get
-            else:
-              #tell them they can't get it
-              print('Can\'t get ' + move[1] + '!')
-          
+        if "item" in rooms[currentRoom] and move[1] in rooms[currentRoom]['item']:
+        #add the item to their inventory
+            inventory += [move[1]]
+        #display a helpful message
+            print(move[1] + ' got!')
+        #delete ONLY the taken item from the room
+            rooms[currentRoom]['item'].remove(move[1])
+        #otherwise, if the item isn't there to get
+        else:
+        #tell them they can't get it
+            print('Can\'t get ' + move[1] + '!')
+        
       ## Define how a player can win
     if currentRoom == 'Garden' and 'key' in inventory and 'potion' in inventory:
         print('You escaped the house with the ultra rare key and magic potion... YOU WIN!')
@@ -138,5 +140,5 @@ while True:
 
 fight = input('select from the following: attack, defend, Flee!')
 if fight == 'attack':
-    print(f'you deal {dice.roll(armory["longsword"])} damage')
+    print(f'you deal {dice.roll(API.armory["longsword"])} damage')
     

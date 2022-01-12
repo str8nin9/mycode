@@ -16,11 +16,11 @@ def beasts():
 def arms():
     #creates an armory
     #add proper name of any WEAPON from dnd 5e armory will update with damage stats
+    #def __init__(self):
     weapons = ["club","dagger","longsword"]
     global armory
-    armory= {}
+    armory = {}    
     for weapon in weapons:
-    
         url= f"{dndurl}/equipment/{weapon}"
         x= requests.get(url).json()
         armory.update({weapon: x["damage"]["damage_dice"]})
