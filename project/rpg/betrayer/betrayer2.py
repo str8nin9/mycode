@@ -17,7 +17,7 @@ import combat
 '''lists and dictionaries'''
 def showInstructions():
     #print a main menu and the commands
-    print(f"you have {player.player.self.hp} hit points")
+    #print(f"you have {player.player.self.hp} hit points")
     print('''
 ========
 Commands:
@@ -33,10 +33,6 @@ def showStatus():
   print('Inventory : ' + str(inventory))
   #print an item if there is one
   if "item" in rooms[currentRoom]:
-      #for loot in rooms[currentRoom]['item']:
-       #   i = 0
-        #  print(f"You see a{rooms[currentRoom]['item'][i]}")
-         # i += 1
     print("You found the following:")
     #seperates items on different lines
     print(*rooms[currentRoom]['item'], sep = "\n")
@@ -54,25 +50,30 @@ rooms = {
             'Hall' : {
                   'south' : 'Kitchen',
                   'east'  : 'Dining Room',
-                  'item'  : ['key', 'longsword']
+                  'item'  : ['key', 'longsword'],
+                  #'mon' : [''],
                 },
 
             'Kitchen' : {
                   'north' : 'Hall',
-                  'item'  : ['goblin'],
+                  #'item'  : ['z'],
+                  'mon' : 'goblin',
                 },
             'Dining Room' : {
                   'west' : 'Hall',
                   'south': 'Garden',
                   'item' : ['potion'],
+                  #'mon' : [''],
                   'north' : 'Pantry',
                },
             'Garden' : {
-                  'north' : 'Dining Room'
+                  'north' : 'Dining Room',
+                  #'mon' : [''],
                },
             'Pantry' : {
                   'south' : 'Dining Room',
                   'item' : ['cookie'],
+                  #'mon' : [''],
             }
          }
 
@@ -127,12 +128,12 @@ while True:
     if currentRoom == 'Garden' and 'key' in inventory and 'potion' in inventory:
         print('You escaped the house with the ultra rare key and magic potion... YOU WIN!')
         quit()
-    if 'goblin' in rooms[currentRoom]['item'] and 'longsword' in inventory:
-        print('A goblin is alarmed by your entrance! \n prepare for combat!!!')
+    if 'mon' in rooms[currentRoom] and 'longsword' in inventory:
+        print(f'A {rooms[currentRoom]["mon"]} is alarmed by your entrance! \n prepare for combat!!!')
         break
       ## If a player enters a room with a monster
-    elif 'item' in rooms[currentRoom] and 'goblin' in rooms[currentRoom]['item']:
-        print('A goblin has got you... GAME OVER!\n honestly, that is a pathetic way to die')
+    elif 'mon' in rooms[currentRoom] and 'goblin' in rooms[currentRoom]['mon']:
+        print(f'A {rooms[currentRoom]["mon"]} has got you... GAME OVER!\n honestly, that is a pathetic way to die')
         quit()
 
 fight = input('select from the following: attack, defend, Flee!')

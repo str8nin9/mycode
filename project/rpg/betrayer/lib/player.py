@@ -7,17 +7,31 @@ import sys
 import os
 import time
 import random
+import dice
 
 #player setup
 class player:
     def __init__(self, name, p_hp):
+        global inventory
+        global weapon
+        global armor
         self.name = name
         self.p_hp = p_hp
-        inventory = []
-        print("success")
-    #name = input("name?\n>")
-    #p_hp = 20
-#myplayer = player()
+        #inventory = []
+        #armor = {}
+        #weapon = {}
+    #modifiable health status
+    def health(self):
+        return self.p_hp
+
+    def ac(self):
+        return 10
+
+    #def melee(self, opponent = 'none'):
+        #attacks opponent
+        #opponent = 
+
+    
 
 if __name__ == "__main__":
     name = input(">")
