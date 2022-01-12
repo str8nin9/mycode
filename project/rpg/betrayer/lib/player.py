@@ -10,13 +10,13 @@ import random
 
 #player setup
 class player:
-    def __init__(self):
+    def __init__(self, name, p_hp):
         self.name = name
-        self.hp = 20
+        self.hp = p_hp
         inventory = []
-    name = input(">")
+        print("success")
 #myplayer = player()
 
 if __name__ == "__main__":
-    player()
+    player() = hero
     #print(player.hp)
