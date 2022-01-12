@@ -13,6 +13,7 @@ import time
 sys.path.insert(0, "/home/student/mycode/project/rpg/betrayer/lib")
 import lib
 import API
+import room
 #import player
 #import combat
 '''lists and dictionaries'''
@@ -39,46 +40,21 @@ def showStatus():
     print(*rooms[currentRoom]['item'], sep = "\n")
     #print(*f'You see a {rooms[currentRoom]["item"]}')
   print("---------------------------")
+'''calling the modules and functions'''
+#all API functions
 API.arms()
 
 API.beasts()
+#room related functions
+room.room()
+#simplifies calling lists and dicts from lib modules
+armory = API.armory
+rooms = room.rooms
 #an inventory, which is initially empty
 inventory = []
 get = ['get', 'take', 'Take', 'Get', 'pick up', 'Pick up', 'pickup', 'Pickup', 'obtain', 'Obtain'] 
 #a dictionary linking a room to other rooms
 ## A dictionary linking a room to other rooms
-rooms = {
-
-            'Hall' : {
-                  'south' : 'Kitchen',
-                  'east'  : 'Dining Room',
-                  'item'  : ['key', 'longsword'],
-                  #'mon' : [''],
-                },
-
-            'Kitchen' : {
-                  'north' : 'Hall',
-                  #'item'  : ['z'],
-                  'mon' : 'goblin',
-                },
-            'Dining Room' : {
-                  'west' : 'Hall',
-                  'south': 'Garden',
-                  'item' : ['potion'],
-                  #'mon' : [''],
-                  'north' : 'Pantry',
-               },
-            'Garden' : {
-                  'north' : 'Dining Room',
-                  #'mon' : [''],
-               },
-            'Pantry' : {
-                  'south' : 'Dining Room',
-                  'item' : ['cookie'],
-                  #'mon' : [''],
-            }
-         }
-
 #start the player in the Hall
 currentRoom = 'Hall'
 
@@ -140,5 +116,5 @@ while True:
 
 fight = input('select from the following: attack, defend, Flee!')
 if fight == 'attack':
-    print(f'you deal {dice.roll(API.armory["longsword"])} damage')
+    print(f'you deal {dice.roll(armory["longsword"])} damage')
     
