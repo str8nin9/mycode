@@ -14,7 +14,7 @@ sys.path.insert(0, "/home/student/mycode/project/rpg/betrayer/lib")
 import lib
 import API
 import room
-#import player
+import player
 #import combat
 '''lists and dictionaries'''
 '''calling the modules and functions'''
@@ -60,6 +60,14 @@ def showStatus():
     print(*rooms[currentRoom]['item'], sep = "\n")
     #print(*f'You see a {rooms[currentRoom]["item"]}')
   print("---------------------------")
+
+'''starting stats and calling player class as hero'''
+name = input('What is your name, young adventurer?\n>')
+p_hp = 20 #player hp
+ac = 10 #player Armor Class
+hero = player.player(name, p_hp, ac)
+
+'''game script'''
 
 
 showInstructions()
@@ -113,12 +121,13 @@ while True:
     if 'mon' in rooms[currentRoom] and 'longsword' in inventory:
         print(f'A {rooms[currentRoom]["mon"]} is alarmed by your entrance! \n prepare for combat!!!')
         break
+        #delete break and use combat() once module is working
       ## If a player enters a room with a monster
     elif 'mon' in rooms[currentRoom] and 'goblin' in rooms[currentRoom]['mon']:
         print(f'A {rooms[currentRoom]["mon"]} has got you... GAME OVER!\n honestly, that is a pathetic way to die')
         quit() #death comes sooner for some of us....
-#testing rudimentary combat module
+#testing rudimentary combat module delete when module finished
 fight = input('select from the following: attack, defend, Flee!')
 if fight == 'attack':
-    print(f'you deal {dice.roll(armory["longsword"])} damage')
+    print(f"{hero.name} deal\'s {dice.roll(armory['longsword'])} damage")
     

@@ -11,12 +11,10 @@ import dice
 
 #player setup
 class player:
-    def __init__(self, name, p_hp):
-        global inventory
-        global weapon
-        global armor
+    def __init__(self, name, p_hp, ac):
         self.name = name
         self.p_hp = p_hp
+        self.ac = ac
         #inventory = []
         #armor = {}
         #weapon = {}
@@ -25,7 +23,7 @@ class player:
         return self.p_hp
 
     def ac(self):
-        return 10
+        return self.ac
 
     #def melee(self, opponent = 'none'):
         #attacks opponent
@@ -36,7 +34,8 @@ class player:
 if __name__ == "__main__":
     name = input(">")
     p_hp = 20
-    hero = player(name, p_hp)
-    print(f"{hero.name} has {hero.p_hp} hp!")
+    ac = 10
+    hero = player(name, p_hp, ac)
+    print(f"{hero.name} has {hero.p_hp} hp with an AC of {hero.ac}!")
     
     #print(player.hp)
