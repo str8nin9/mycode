@@ -17,6 +17,26 @@ import room
 #import player
 #import combat
 '''lists and dictionaries'''
+'''calling the modules and functions'''
+#all API functions
+API.arms()
+API.beasts()
+#room related functions
+room.room()
+#menu functions
+#menu.showInstructions()
+#simplifies calling lists and dicts from lib modules
+armory = API.armory
+rooms = room.rooms
+'''lists and dictionaries'''
+#an inventory, which is initially empty
+inventory = []
+#all possible iterations of 'to get' will try to implement a thesarus 
+get = ['get', 'take', 'Take', 'Get', 'pick up', 'Pick up', 'pickup', 'Pickup', 'obtain', 'Obtain'] 
+#start the player in the Hall
+currentRoom = 'Hall'
+
+'''menu definitions'''
 def showInstructions():
     #print a main menu and the commands
     #print(f"you have {player.player.self.hp} hit points")
@@ -40,23 +60,7 @@ def showStatus():
     print(*rooms[currentRoom]['item'], sep = "\n")
     #print(*f'You see a {rooms[currentRoom]["item"]}')
   print("---------------------------")
-'''calling the modules and functions'''
-#all API functions
-API.arms()
 
-API.beasts()
-#room related functions
-room.room()
-#simplifies calling lists and dicts from lib modules
-armory = API.armory
-rooms = room.rooms
-#an inventory, which is initially empty
-inventory = []
-get = ['get', 'take', 'Take', 'Get', 'pick up', 'Pick up', 'pickup', 'Pickup', 'obtain', 'Obtain'] 
-#a dictionary linking a room to other rooms
-## A dictionary linking a room to other rooms
-#start the player in the Hall
-currentRoom = 'Hall'
 
 showInstructions()
 
@@ -112,8 +116,8 @@ while True:
       ## If a player enters a room with a monster
     elif 'mon' in rooms[currentRoom] and 'goblin' in rooms[currentRoom]['mon']:
         print(f'A {rooms[currentRoom]["mon"]} has got you... GAME OVER!\n honestly, that is a pathetic way to die')
-        quit()
-
+        quit() #death comes sooner for some of us....
+#testing rudimentary combat module
 fight = input('select from the following: attack, defend, Flee!')
 if fight == 'attack':
     print(f'you deal {dice.roll(armory["longsword"])} damage')
